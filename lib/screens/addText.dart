@@ -2,34 +2,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_list/model/model.dart';
 import 'package:todo_list/screens/viewPage.dart';
 
 class AddText extends StatelessWidget {
-  const AddText({Key? key}) : super(key: key);
+ 
+    final TextEditingController _titletextController = TextEditingController();
+    final TextEditingController _contenttextController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    String content;
-    String title;
-    TextEditingController _titletextController = TextEditingController();
-    TextEditingController _contenttextController = TextEditingController();
-
-    void clearText() {
+    void _clearText() {
       _titletextController.clear();
       _contenttextController.clear();
     }
+    String name ="";
+  @override
+  Widget build(BuildContext context) {
+    
 
     void _addTask() {
       WidgetsFlutterBinding.ensureInitialized();
       Firebase.initializeApp();
-      FirebaseFirestore.instance
-          .collection("todolist")
-          .add({"title": _titletextController.text,"content": _contenttextController.text});
-      // FirebaseFirestore.instance
-      //     .collection("todolist")
-      //     .add({"content": _contenttextController.text});
+      FirebaseFirestore.instance.collection("todolist").add({
+        "title": _titletextController.text,
+        "content": _contenttextController.text
+      });
+      //   // FirebaseFirestore.instance
+      //   //     .collection("todolist")
+      //   //     .add({"content": _contenttextController.text});
     }
 
+    final ModelTodo _data = ModelTodo();
     return Sizer(builder: (context, orientation, deviceType) {
       return Scaffold(
         appBar: AppBar(
@@ -37,22 +39,23 @@ class AddText extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  title = _titletextController.text;
-                  content = _contenttextController.text;
+                  _data.title = _titletextController.text;
+                  _data.content = _contenttextController.text;
 
-                 
-                  if(content == "" ){
+                  if (_data.content == "") {
                     SnackBar snackBar = SnackBar(
-                                      backgroundColor: Colors.red.shade600,
-                                      content: Text(
-                                          "content couldn't empty"),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                  }else{
-                     _addTask();
-                  clearText();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewPage()));
+                      backgroundColor: Colors.red.shade600,
+                      content: const Text("content couldn't empty"),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else {
+                    _addTask();
+
+                    _clearText();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ViewPage()));
                   }
                 },
                 child: Icon(
@@ -74,7 +77,7 @@ class AddText extends StatelessWidget {
                   height: 5.0.h,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 2.0.w),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
                   height: 5.h,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(),
@@ -88,21 +91,22 @@ class AddText extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  height: 50.h,
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  height: 80.h,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(),
                   child: Column(
                     children: [
                       Expanded(
                         child: TextField(
-                          style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                          style:
+                              TextStyle(fontSize: 16.sp, color: Colors.white),
                           controller: _contenttextController,
                           decoration: InputDecoration(
                               hintText: "Content",
                               border: InputBorder.none,
-                              hintStyle:
-                                  TextStyle(fontSize: 16.sp, color: Colors.white)),
+                              hintStyle: TextStyle(
+                                  fontSize: 16.sp, color: Colors.white)),
                         ),
                       ),
                     ],
