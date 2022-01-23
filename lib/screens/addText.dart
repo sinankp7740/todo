@@ -9,6 +9,8 @@ class AddText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String content;
+    String title;
     TextEditingController _titletextController = TextEditingController();
     TextEditingController _contenttextController = TextEditingController();
 
@@ -35,9 +37,23 @@ class AddText extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  _addTask();
+                  title = _titletextController.text;
+                  content = _contenttextController.text;
+
+                 
+                  if(content == "" ){
+                    SnackBar snackBar = SnackBar(
+                                      backgroundColor: Colors.red.shade600,
+                                      content: Text(
+                                          "content couldn't empty"),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                  }else{
+                     _addTask();
                   clearText();
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ViewPage()));
+                  }
                 },
                 child: Icon(
                   Icons.done,

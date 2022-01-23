@@ -81,7 +81,7 @@ class ViewPage extends StatelessWidget {
                                       print("deleted");
                                     },//TODO
                                     onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Details()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Details()));
                                     },//
                                   ),
                                 ),
