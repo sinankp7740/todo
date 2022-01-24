@@ -5,24 +5,23 @@ import 'package:sizer/sizer.dart';
 import 'package:todo_list/model/model.dart';
 import 'package:todo_list/screens/viewPage.dart';
 
+// ignore: use_key_in_widget_constructors, must_be_immutable
 class AddText extends StatelessWidget {
- 
-    final TextEditingController _titletextController = TextEditingController();
-    final TextEditingController _contenttextController = TextEditingController();
+  final TextEditingController _titletextController = TextEditingController();
+  final TextEditingController _contenttextController = TextEditingController();
 
-    void _clearText() {
-      _titletextController.clear();
-      _contenttextController.clear();
-    }
-    String name ="";
+  void _clearText() {
+    _titletextController.clear();
+    _contenttextController.clear();
+  }
+
+  String name = "";
   @override
   Widget build(BuildContext context) {
-    
-
-    void _addTask() {
+    void _addTask() async {
       WidgetsFlutterBinding.ensureInitialized();
       Firebase.initializeApp();
-      FirebaseFirestore.instance.collection("todolist").add({
+      await FirebaseFirestore.instance.collection("todolist").add({
         "title": _titletextController.text,
         "content": _contenttextController.text
       });
@@ -82,6 +81,7 @@ class AddText extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(),
                   child: TextField(
+                    textInputAction: TextInputAction.done,
                     style: TextStyle(fontSize: 19.sp, color: Colors.white),
                     controller: _titletextController,
                     decoration: InputDecoration(
@@ -99,6 +99,10 @@ class AddText extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextField(
+                          textInputAction: TextInputAction.newline,
+                          expands: true,
+                          minLines: null,
+                          maxLines: null,
                           style:
                               TextStyle(fontSize: 16.sp, color: Colors.white),
                           controller: _contenttextController,
