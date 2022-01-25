@@ -51,10 +51,8 @@ class AddText extends StatelessWidget {
                     _addTask();
 
                     _clearText();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ViewPage()));
+                    Navigator.pop(
+                        context);
                   }
                 },
                 child: Icon(
@@ -110,7 +108,7 @@ class AddText extends StatelessWidget {
                               hintText: "Content",
                               border: InputBorder.none,
                               hintStyle: TextStyle(
-                                  fontSize: 16.sp, color: Colors.white)),
+                                  fontSize: 14.sp, color: Colors.white)),
                         ),
                       ),
                     ],

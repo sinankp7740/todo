@@ -56,10 +56,11 @@ class Details extends StatelessWidget {
                     updateTask(docid);
 
                     clearText();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ViewPage()));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const ViewPage()));
+                    Navigator.pop(context);
                   }
                 },
                 child: Icon(
